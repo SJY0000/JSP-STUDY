@@ -9,7 +9,7 @@
 <body>
 <!-- jsp에 Java Bean 객체 만들기 -->
 <!-- id는 객체의 이름, class는 beans객체, scope는 범위 -->
-<jsp:useBean id="user" class="beans.User" scope="page"/>
+<jsp:useBean id="user" class="beans.User" scope="request"/>
 
 <!-- java Bean에 값을 입력하기(set메소드) -->
 <jsp:setProperty property="email" name="user" value="abcd@naver.com"/>
