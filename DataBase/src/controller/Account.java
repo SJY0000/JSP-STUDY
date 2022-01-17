@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,4 +31,35 @@ public class Account {
 		if(count == 0) return false; // 없으면 false 있으면 true
 		return true;
 	}
+	public boolean exists(String email) throws SQLException {
+		// 이미 등록된 email이 있을 경우 true 없으면 false
+		String sql = "SELECT COUNT(*) AS count FROM users where email=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, email);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		int count = 0;
+		
+		if (rs.next()) { // 결과가 있으면
+			count = rs.getInt("count"); // count 열의 값을 리턴
+		}
+		if (count == 0) return false; // 없으면 false 있으면 true
+		
+		return true;
+	}
+	public void create(String email, String password) throws SQLException {
+		// DB에 새 user의 email, password를 입력
+		String sql = "insert into users(email, password) values(?, ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, email);
+		pstmt.setString(2, password);
+		
+		pstmt.executeUpdate(); // 결과 rs가 없을 경우(입력, 수정, 삭제) 
+		
+		pstmt.close();
+	}
+
 }
