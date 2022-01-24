@@ -1,14 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="<%=request.getContextPath()%>/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css" />
     <title>Todo리스트</title>
   </head>
@@ -29,18 +25,14 @@ pageEncoding="UTF-8"%>
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/list"
-                  >ToDo 리스트</a
-                >
+                <a class="nav-link" href="<%=request.getContextPath()%>/todos?action=list">ToDo 리스트</a>
               </li>
             </ul>
-            <ul class="navbar-nav mb-2">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/logout"
-                  >로그아웃</a
-                >
+                <a class="nav-link" href="<%=request.getContextPath()%>/todos/logout">로그아웃</a>
               </li>
             </ul>
           </div>
@@ -53,7 +45,7 @@ pageEncoding="UTF-8"%>
       <h3 class="text-center">DO IT list's</h3>
       <hr />
       <div class="container text-left">
-        <a href="" class="btn btn-success">할일 추가</a>
+        <a href="<%=request.getContextPath()%>/todos?action=new" class="btn btn-success">할일 추가</a>
       </div>
       <br />
       <table class="table table-bordered">
@@ -65,7 +57,20 @@ pageEncoding="UTF-8"%>
             <th>액션</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <!-- 할 일 데이터를 table로 -->
+          <c:forEach var="todo" items="${listTodo}">
+            <tr>
+              <td><c:out value="${todo.title}" /></td>
+              <td><c:out value="${todo.targetDate}" /></td>
+              <td><c:out value="${todo.status}" /></td>
+              <td>
+              <a href="<%=request.getContextPath()%>/todos?action=edit&id=${todo.id}" class="btn btn-info btn-sm">수정</a>
+              <a href="<%=request.getContextPath()%>/todos?action=delete&id=${todo.id}" class="btn btn-danger btn-sm">삭제</a>
+              </td>
+            </tr>
+          </c:forEach>
+        </tbody>
       </table>
     </div>
     <!-- 본문 끝 -->

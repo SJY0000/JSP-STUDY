@@ -25,11 +25,8 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession();
-//		session.setAttribute("user", ""); // 공백입력
-//		session.setAttribute("message", "");
-		// login 페이지로 이동
-		response.sendRedirect("login/login.jsp"); // login 폴더 안의 login.jsp페이지로 이동
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,6 +42,8 @@ public class LoginController extends HttpServlet {
 		loginBean.setPassword(password);
 		
 		if (loginDao.validate(loginBean)) { // 계정이 있음 => todolist.jsp로 forward
+			HttpSession session = request.getSession();
+			session.setAttribute("username", username); // 로그인한 username을 session에 저장
 			RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-list.jsp");
 			dispatcher.forward(request, response);
 		} else { // 계정이 없음
