@@ -43,7 +43,7 @@
     <!-- 본문 -->
     <div class="container">
       <div class="row mt-5">
-        <div class="col-md-5">
+        <div class="col-md-6 mx-auto">
           <div class="card card-body">
           <!-- 만약에 todo가 null이면 새로입력 , todo가 있으면 update -->
           <c:if test="${todo != null}">
@@ -83,7 +83,7 @@
           	<label>목표 일자</label>
           	<input type="date" class="form-control" name="targetDate" value='<c:out value="${todo.targetDate}" />' required /> 
           </div>
-          <div class="form-group mt-3">
+          <div class="form-group mt-3 d-grid">
           	<button type="submit" class="btn btn-info">저장</button>
           </div>
           </form>

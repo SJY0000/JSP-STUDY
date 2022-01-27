@@ -32,7 +32,7 @@
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/todos/logout">로그아웃</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/todos?action=logout">로그아웃</a>
               </li>
             </ul>
           </div>
@@ -41,8 +41,8 @@
     </header>
     <!-- navbar 끝 -->
     <!-- 본문 -->
-    <div class="container">
-      <h3 class="text-center">DO IT list's</h3>
+    <div class="container mt-5">
+      <h3 class="text-center">DO IT</h3>
       <hr />
       <div class="container text-left">
         <a href="<%=request.getContextPath()%>/todos?action=new" class="btn btn-success">할일 추가</a>
@@ -63,18 +63,30 @@
             <tr>
               <td><c:out value="${todo.title}" /></td>
               <td><c:out value="${todo.targetDate}" /></td>
-              <td><c:out value="${todo.status}" /></td>
+              <td class="status"><c:out value="${todo.status}" /></td>
               <td>
-              <a href="<%=request.getContextPath()%>/todos?action=edit&id=${todo.id}" class="btn btn-info btn-sm">수정</a>
-              <a href="<%=request.getContextPath()%>/todos?action=delete&id=${todo.id}" class="btn btn-danger btn-sm">삭제</a>
+                <a href="<%=request.getContextPath()%>/todos?action=edit&id=${todo.id}" class="btn btn-info btn-sm">수정</a>
+                <a
+                  href="<%=request.getContextPath()%>/todos?action=delete&id=${todo.id}"
+                  onclick="if(!confirm('정말로 삭제하시겠습니까?')) return false"
+                  class="btn btn-danger btn-sm"
+                  >삭제</a
+                >
               </td>
             </tr>
           </c:forEach>
         </tbody>
       </table>
+      <div class="row mt-5"></div>
+        <div class="col-4 mx-auto">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
     </div>
     <!-- 본문 끝 -->
     <jsp:include page="../common/footer.jsp" />
     <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="<%=request.getContextPath()%>/js/todo.js"></script>
   </body>
 </html>

@@ -1,7 +1,6 @@
 package todoApp.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -40,7 +39,9 @@ public class TodoController extends HttpServlet {
 		case "edit" : showEditForm(request, response); break;
 		case "update" : updateTodo(request, response); break;
 		case "list" : listTodo(request, response); break; // localhost8090:TODO/list
-		default : // 요청 주소가 기본 또는 잘못되었을 경우 login페이지로 이동 
+		default : // 요청 주소가 기본 또는 잘못되었을 경우 login페이지로 이동
+			HttpSession session = request.getSession();
+			session.invalidate(); // session 데이터 전부 삭제
 			RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 			dispatcher.forward(request, response); break;
 		} 
@@ -63,6 +64,7 @@ public class TodoController extends HttpServlet {
 		LocalDate targetDate = LocalDate.parse(request.getParameter("targetDate")); 
 		boolean isDone = Boolean.valueOf(request.getParameter("isDone"));
 		
+		// id는 auto_increment 속성을 가지고 있어서 자동생성
 		Todo newTodo = new Todo(title, username, description, targetDate, isDone);
 		
 		todoDAO.insertTodo(newTodo);
@@ -75,7 +77,7 @@ public class TodoController extends HttpServlet {
 		
 		todoDAO.deleteTodo(id);
 		
-		response.sendRedirect("todos?action=list"); // 새 할 일을 삭제 후에 list페이지로 이동
+		response.sendRedirect("todos?action=list"); // 할 일을 삭제 후에 list페이지로 이동
 		
 	}
 
@@ -101,11 +103,11 @@ public class TodoController extends HttpServlet {
 		LocalDate targetDate = LocalDate.parse(request.getParameter("targetDate")); 
 		boolean isDone = Boolean.valueOf(request.getParameter("isDone"));
 		
-		Todo newTodo = new Todo(id, title, username, description, targetDate, isDone);
+		Todo oldTodo = new Todo(id, title, username, description, targetDate, isDone);
 		
-		todoDAO.updateTodo(newTodo);
+		todoDAO.updateTodo(oldTodo);
 		
-		response.sendRedirect("todos?action=list"); // 새 할 일을 수정 후에 list페이지로 이동
+		response.sendRedirect("todos?action=list"); // 할 일을 수정 후에 list페이지로 이동
 		
 	}
 

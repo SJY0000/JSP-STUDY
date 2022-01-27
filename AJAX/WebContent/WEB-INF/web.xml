@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>AJAX</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  	<!-- 한글설정 필터추가 -->
+	<filter>
+		<filter-name>Set Character Encoding</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+	<!-- filter의 filter-name과 filter-mapping의 filter-name 값을 같게 설정해줘야함 -->
+		<filter-name>Set Character Encoding</filter-name>
+		<url-pattern>/*</url-pattern> <!-- 현재 프로젝트 안의 어떤 주소라던지 전부 적용 -->
+	</filter-mapping> 
+	<!-- 한글설정 END -->  
+</web-app>

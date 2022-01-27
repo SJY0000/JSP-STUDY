@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AJAX 연습</title>
+    <style>
+      div.box {
+        margin: 2px;
+        border: 1px solid pink;
+        padding: 10px;
+        background-color: gray;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>댓글달기 FORM</h1>
+    <form name="commentform">
+      <div>댓글 입력 :</div>
+      <textarea name="comment" rows="5" cols="80" required></textarea>
+      <div>이메일 입력 :</div>
+      <input type="email" name="email" placeholder="Email 입력해주세요." />
+      <br />
+      <input type="button" onclick="sendServer()" value="댓글달기" />
+    </form>
+    <div id="output"></div>
+    <script type="text/javascript">
+      const input = document.querySelector('textarea'); // type으로 선택할 떄는 대괄호([])사용
+      const inputemail = document.querySelector('input[type="email"]');
+      const output = document.getElementById('output');
+      const request = new XMLHttpRequest(); // ajax request 객체 생성
+
+      // input.addEventListener('keyup', sendServer());
+      function sendServer() {
+        // 버튼을 누르면 실행되는 함수
+        let comment = input.value; // 입력한 댓글
+        let email = inputemail.value; // 입력한 이메일
+        let url = 'comment.jsp?comment=' + comment + '&email=' + email; // 요청할 jsp페이지 주소
+        request.open('GET', url, true);
+        request.send();
+        request.onreadystatechange = getInfo;
+      }
+
+      function getInfo() {
+        if (request.readyState == 4 && request.status == 200) {
+          let comments = request.responseText; // 요청한 결과 받기
+          output.innerHTML = comments;
+        }
+      }
+    </script>
+  </body>
+</html>
