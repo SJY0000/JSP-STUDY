@@ -1,3 +1,6 @@
-body {
-	background-color: skyblue;
+table tbody td {
+  /*단어를 붙여서 표시, !important는 무조건 적용(우선순위 최상위) */
+  word-break: keep-all !important;
+  /*table 안 td의 내용을 세로 가운데정렬*/
+  vertical-align: middle !important;
 }

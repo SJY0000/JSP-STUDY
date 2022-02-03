@@ -18,86 +18,81 @@ import model.Contact;
 @WebServlet("/Contacts")
 public class ContactController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private ContactDAO contactDao;
-	
-	@Resource(name="jdbc/demo")
+
+	@Resource(name = "jdbc/demo")
 	private DataSource dataSource;
 
 	@Override
 	public void init() throws ServletException {
-		super.init();
-	contactDao = new ContactDAO(dataSource);
+		contactDao = new ContactDAO(dataSource);
 	}
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF8");
 
+		// parameter가 action값을 읽어서 액션으로 저장하는데 만약 값이 null이면 "list"로 대체
+		String action = request.getParameter("action") != null ? request.getParameter("action") : "list";
 
-//		list.forEach(contact -> System.out.println(contact.toString()));
-		String action = request.getParameter("action");
-		
 		switch (action) {
-			case "post":
-				save(request, response);
-				break;
-			case "edit":
-				edit(request, response);
-				break;
-			case "update":
-				update(request, response);
-				break;
-			case "del":
-				delete(request, response);
-				break;
-			default:
-				list(request, response);
-				break;
+		case "post": // 새로 입력 저장
+			save(request, response);
+			break;
+		case "edit": // 수정하기 창을 표시
+			edit(request, response);
+			break;
+		case "update": // 실제 수정하기
+			update(request, response);
+			break;
+		case "del": // 삭제
+			delete(request, response);
+			break;
+		default: // 전체 연락처를 화면에 table로 표시
+			list(request, response);
+			break;
 		}
 	}
 
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Contact> list = contactDao.findAll();
+		List<Contact> list = contactDao.findAll(); // DB 모든 연락처 가져오기
 		request.setAttribute("contacts", list);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("contact/list.jsp");
-		dispatcher.forward(request, response);
-		
+
+		RequestDispatcher rd = request.getRequestDispatcher("contact/list.jsp");
+		rd.forward(request, response);
+
 	}
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
 		
-		contactDao.delete(id);
-		
-		response.sendRedirect("Contacts?action=list");
 	}
 
 	private void update(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void edit(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	private void save(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		request.setCharacterEncoding("UTF8");
+	private void save(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		Contact contact = new Contact();
+
+		contact.setName(request.getParameter("name"));
+		contact.setEmail(request.getParameter("email"));
+		contact.setPhone(request.getParameter("phone"));
+
+		boolean isSaved = contactDao.save(contact);
 		
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-		String phone = request.getParameter("phone");
-		
-		Contact contact = new Contact(name, email, phone);
-		
-		contactDao.save(contact);
-		
-		response.sendRedirect("Contacts?action=list");
+		if(isSaved) System.out.println("입력완료!");
+
+		list(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
