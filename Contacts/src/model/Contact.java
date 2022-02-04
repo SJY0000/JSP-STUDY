@@ -1,19 +1,11 @@
 package model;
 
 public class Contact {
+	//DB의 Contacts 테이블과 열의 이름이 같음
 	private int id;
 	private String name;
 	private String email;
 	private String phone;
-	
-	
-	public Contact() {}
-	public Contact(String name, String email, String phone) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-	}
 	
 	public int getId() {
 		return id;
@@ -39,10 +31,10 @@ public class Contact {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
 	@Override
 	public String toString() {
 		return "Contact [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + "]";
 	}
-	
-	
+		
 }

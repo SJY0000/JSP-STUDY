@@ -1,13 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib
-uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/includes/header.jsp" />
 <div class="container">
   <div class="font-weight-bold mt-3 shadow p-3 mb-4 bg-light rounded">연락처 리스트</div>
 
   <div class="mb-3">
-    <button type="button" class="btn btn-primary btn-add" data-toggle="modal" data-target="#modal-add-update">
-      추 가
-    </button>
+    <button type="button" class="btn btn-primary btn-add" data-toggle="modal" data-target="#modal-add-update">추 가</button>
   </div>
 
   <table class="table table-hover">
@@ -22,7 +19,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       </tr>
     </thead>
     <tbody>
-      <!-- Controller에서 저장한 List<contact> list가 넘어옴 -->
       <c:forEach var="contact" items="${contacts}">
         <tr>
           <td><c:out value="${contact.id}" /></td>
@@ -30,27 +26,18 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           <td><c:out value="${contact.email}" /></td>
           <td><c:out value="${contact.phone}" /></td>
           <td>
-            <button type="button" class="btn btn-info btn-sm btn-edit" data-id="<c:out value='${contact.id}' />">
-              수정
-            </button>
+            <button type="button" class="btn btn-info btn-sm btn-edit" data-id="<c:out value='${contact.id}' />">수정</button>
           </td>
           <td>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm btn-delete"
-              data-id="<c:out value='${contact.id}' />"
-              data-toggle="modal"
-              data-target="#modal-delete"
-            >
-              삭제
-            </button>
+            <button type="button" class="btn btn-danger btn-sm btn-delete" data-id="<c:out value='${contact.id}' />" data-toggle="modal" data-target="#modal-delete">삭제</button>
           </td>
         </tr>
       </c:forEach>
     </tbody>
   </table>
 </div>
-<!-- Modal -->
+
+<%-- 아래는 모달(팝업창) html --%>
 <div class="modal fade" id="modal-add-update" tabindex="-1" aria-labelledby="addUpdateLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -60,7 +47,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form autocomplete="off" method="post">
+      <form id="add-update" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
             <label for="name">name</label>
@@ -78,13 +65,14 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success btn-action">저장</button>
-          <button type="button" class="btn btn-secondary btn-action" data-dismiss="modal">취소</button>
+          <button type="submit" class="btn btn-success">저장</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+<!-- 삭제 모달 창 -->
 <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -98,8 +86,8 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <p>정말로 삭제할까요?</p>
       </div>
       <div class="modal-footer">
-        <form id="frm-delete" action="<%= request.getContextPath() %>/Contacts">
-          <input type="hidden" name="action" value="del" />
+        <form id="frm-delete">
+          <input type="hidden" name="cmd" value="del" />
           <input type="hidden" name="id" value="" />
           <button type="submit" class="btn btn-danger btn-action">삭제</button>
         </form>
@@ -110,7 +98,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </div>
 
 <jsp:include page="/includes/footer.jsp" />
+
 <script src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
+
 <script>
   $('.nav-link').removeClass('active');
   $('#m-contacts').addClass('active');

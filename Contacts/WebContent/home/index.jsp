@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <jsp:include page="/includes/header.jsp" />
+
 	<div class="container">
 		<div class="jumbotron mt-5">
 			<h1 class="display-4">연락처 관리</h1>
@@ -12,8 +14,9 @@
 		</div>
 	</div>
 	
-	<jsp:include page="/includes/footer.jsp" />
-	<script>
-		$('.nav-link').removeClass('active');
-		$('#m-home').addClass('active'); // active 클래스 추가(밝게)
-	</script>
+<jsp:include page="/includes/footer.jsp" />
+
+<script>
+	$('.nav-link').removeClass('active'); //모든 메뉴의 액티브를 삭제
+	$('#m-home').addClass('active'); 	  //네브바에서 메뉴중에 m-home에 액티브 표시 (밝게)
+</script>
