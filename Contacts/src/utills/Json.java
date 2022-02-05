@@ -13,7 +13,7 @@ public class Json {
 	
 	private ContactJson contactJson; //보낼 객체
 	private Gson gson;				 //Gson라이브러리 객체
-	private PrintWriter out;		 //출력 객체	
+	private PrintWriter out;		 //출력 객체
 	private HttpServletResponse response; //응답 객체
 	
 	public Json(HttpServletResponse response) { //생성자 (response) => 응답으로 제이슨 출력
@@ -38,7 +38,7 @@ public class Json {
 		sendResponse(gson.toJson(contactJson)); // 입력된 상태와 연락처를 모두 제이슨으로 변환해서 출력 
 	}
 	//2. 메세지만 응답으로 보낼때 (입력,업데이트,삭제 등은 메세지로 성공 여부만 보낸다.)
-	public void sendMessage(boolean status, String message) {
+	public void sendMessage(boolean status, String message) { 
 		contactJson.setStatus(status);  // 상태 입력
 		contactJson.setMessage(message); // 메세지 입력
 		

@@ -34,7 +34,7 @@
       type: 'POST',
       url: $('#add-update').attr('action'),
       data: $('#add-update').serialize(), //form의 입력한 내용을 문자열로 변환
-      dataType: 'json', //받을때 타입
+      dataType: 'json', //data를 json 타입으로 변환
     }).done(function (data) {
       if (data.status) {
         //요청결과를 성공적으로 받음
