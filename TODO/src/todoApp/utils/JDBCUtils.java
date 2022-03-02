@@ -3,6 +3,8 @@ package todoApp.utils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -13,7 +15,7 @@ public class JDBCUtils {
 	private static String jdbcUsername = "root";
 	private static String jdbcPassword = "1234";
 	
-	public static Connection getConnection() {
+	public static Connection getConnection() throws SQLException {
 		Connection conn = null;
 		
 		try {
@@ -21,8 +23,6 @@ public class JDBCUtils {
 			conn = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword); // 순서 1번
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver class not found!");
-		} catch (SQLException e) {
-			System.out.println("SQL ERROR!");
 		}
 		
 		return conn; //DB에 연결하여 Connection을 받아옴
@@ -34,5 +34,30 @@ public class JDBCUtils {
 	// SQL날짜를 JAVA날짜로 변경
 	public static LocalDate getUtilDate(Date sqlDate) {
 		return sqlDate.toLocalDate();
+	}
+	
+	public static void close(Connection conn, PreparedStatement pstmt) {
+		close(conn, pstmt, null);
+	}
+	
+	public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+		if (rs != null)
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		if (pstmt != null)
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		if (conn != null)
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
 }

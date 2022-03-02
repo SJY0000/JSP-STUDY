@@ -1,6 +1,7 @@
 //console.log('테스트');
 (function (path) {
   //코드 작성
+  console.log(path);
   $('.table').DataTable({
     language: {
       lengthMenu: '표시할 줄수 선택    _MENU_',
