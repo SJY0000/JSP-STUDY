@@ -1,17 +1,15 @@
-package todoApp.model;
+package com.exaple.domain;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class User {
+	// JSON 문자열의 name 속성과 일치하지 않을 때
+	// @SerializedName로 name 속성과 일치 시키면 됨
+	@SerializedName("firstName")
 	private String firstName;
 	private String lastName;
 	private String userName;
 	private String password;
-	
-	
-//	private Todo todo; // 테이블 조인에서 1:1의 관계
-	private List<Todo> todolist; // 테이블 조인에서 1:N의 관계(1에다가 설정)
-	private Integer todoCount;
 	
 	public User() {} // 기본 생성자는 JAVA bean용으로 필요
 	
@@ -47,25 +45,10 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Todo> getTodolist() {
-		return todolist;
-	}
-
-	public void setTodolist(List<Todo> todolist) {
-		this.todolist = todolist;
-	}
-
-	public Integer getTodoCount() {
-		return todoCount;
-	}
-
-	public void setTodoCount(Integer todoCount) {
-		this.todoCount = todoCount;
-	}
-
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName + ", password="
-				+ password + ", todolist=" + todolist + ", todoCount=" + todoCount + "]";
+				+ password + "]";
 	}
+	
 }

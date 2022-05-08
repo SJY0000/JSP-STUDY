@@ -1,0 +1,41 @@
+package com.main.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/Page")
+public class PageController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+
+    public PageController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String page = request.getParameter("page");
+
+		if (page.equals("main")) {
+			request.setAttribute("page", "메인");
+		} else {
+			request.setAttribute("page", "다른거");
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("main.jsp");
+		rd.forward(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

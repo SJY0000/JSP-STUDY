@@ -1,0 +1,12 @@
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  background: url(https://mblogthumb-phinf.pstatic.net/20160427_143/ppanppane_1461740401939t0xPQ_PNG/%B7%D4%B5%A5%B8%AE%BE%C6_%B7%CE%B0%ED_%285%29.png?type=w2), radial-gradient(orange, white);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body div.main {
+  height: 100%;
+}

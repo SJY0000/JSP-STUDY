@@ -10,7 +10,7 @@ public class Todo {
 	private LocalDate targetDate; // 목표날짜 예) 2012-12-12
 	private boolean status; // 현재 상태(할일을 진행 또는 완료)
 	
-	protected Todo() {}
+	public Todo() {}
 
 	public Todo(String title, String username, String description, LocalDate targetDate, boolean status) {
 		super();

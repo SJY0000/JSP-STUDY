@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import todoApp.model.Todo;
 import todoApp.model.User;
 import todoApp.utils.JDBCUtils;
 
@@ -105,6 +107,8 @@ public class UserDao {
 		return userList;		
 	} // getAllUsers
 	
+
+	
 	public void update(User user) {
 		String sql = "";
 		sql += " UPDATE users ";
@@ -113,7 +117,6 @@ public class UserDao {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		
 		try {
 			conn = JDBCUtils.getConnection();
@@ -130,4 +133,48 @@ public class UserDao {
 		}
 		
 	}
+	
+	public void updatePasswordById(String id, String pwd) {
+		String sql = "";
+		sql += " UPDATE users ";
+		sql += " SET password = ? ";
+		sql += " WHERE userName = ? ";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt);
+		}
+		
+		
+	}
+	public void delete(String userName) {
+		String sql = "DELETE FROM users WHERE userName = ?";
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userName);
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt);
+		}
+		
+	} // delete
 }
